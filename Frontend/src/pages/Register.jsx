@@ -61,10 +61,10 @@ export default function SignUpForm() {
   };
 
   // Input common styling
-  const inputStyle = "w-full bg-neutral-900 text-white rounded-lg px-4 py-3 placeholder-gray-500 focus:ring-1 focus:ring-white focus:outline-none border-none shadow-md transition-all";
+  const inputStyle = "w-full bg-neutral-900 text-white rounded-lg px-4 py-3 placeholder-gray-500 focus:ring-1 focus:ring-white focus:outline-none border-none shadow-md transition-all duration-300 ease-in-out focus:scale-105 hover:scale-105";
 
   // Button common styling
-  const socialButtonStyle = "flex items-center justify-center gap-2 py-3 px-4 rounded-lg transition-colors border border-white/20 hover:border-white text-white bg-black/50 hover:bg-white/5 shadow-lg";
+  const socialButtonStyle = "flex items-center justify-center gap-2 py-3 px-4 rounded-lg transition-all duration-300 ease-in-out focus:scale-105 hover:scale-105 border border-white/20 hover:border-white text-white bg-black/50 hover:bg-white/5 shadow-lg";
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4 font-['Inter']">
@@ -139,7 +139,7 @@ export default function SignUpForm() {
               <input
                 type="text"
                 name="firstName"
-                placeholder="eg. John"
+                placeholder="enter First Name"
                 value={formData.firstName}
                 onChange={handleChange}
                 className={inputStyle}
@@ -152,8 +152,8 @@ export default function SignUpForm() {
               </label>
               <input
                 type="text"
-                name="lastName"
-                placeholder="eg. Francisco"
+                name="lastname"
+                placeholder="enter last name"
                 value={formData.lastName}
                 onChange={handleChange}
                 className={inputStyle}
@@ -193,7 +193,7 @@ export default function SignUpForm() {
               <button
                 type="button" // Use type="button" to prevent form submission
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-all duration-300 ease-in-out focus:scale-125 hover:scale-125"
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
@@ -204,7 +204,7 @@ export default function SignUpForm() {
           {/* Sign Up Button */}
           <button
             onClick={handleSubmit}
-            className="w-full bg-white hover:bg-gray-100 text-black font-bold py-3 px-4 rounded-lg shadow-xl transition-colors mt-6"
+            className="w-full bg-white hover:bg-gray-100 text-black font-bold py-3 px-4 rounded-lg shadow-xl transition-all duration-300 ease-in-out focus:scale-110 hover:scale-110 mt-6"
           >
             Sign Up
           </button>
