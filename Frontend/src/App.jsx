@@ -15,7 +15,7 @@ const App = () => {
   },[])
 
   return (
-    <div className="bg-[#1A1A1A] text-white px-2.5">
+    <div className="bg-[#1A1A1A] text-white px-2.5 lg:px-[2.5vw]">
       <Navbar/>
       <MainRoutes/>
     </div>

@@ -4,7 +4,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   return (
     <>
-      <nav className="flex items-center justify-between w-[95%] absolute top-2 lg:top-5 left-1/2 -translate-x-1/2">
+      <nav className="flex items-center justify-between w-[95%] fixed top-2 lg:top-5 left-1/2 -translate-x-1/2 z-999">
         {/* <i className="ri-twitter-x-line px-3 py-2 bg-neutral-400/20 text-neutral-300 hover:bg-neutral-200/30 hover:text-white backdrop-blur-[1px] border rounded-full border-neutral-400/20" onClick={() => navigate("/")}></i> */}
         <i
           className="ri-menu-line px-3 py-2 bg-neutral-400/20 text-neutral-300 hover:bg-neutral-200/30 hover:text-white backdrop-blur-[1px] border rounded-full border-neutral-400/20"
@@ -20,7 +20,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               `w-[7vw] rounded-full text-center py-2.5  font-medium transition ${
                 isActive
-                  ? "bg-neutral-300/20 backdrop-blur-[1px] border  border-neutral-600/20 text-white"
+                  ? "bg-blue-600/80 backdrop-blur-[1px] border border-neutral-600/20 text-white"
                   : "text-neutral-400 hover:text-white"
               }`
             }
@@ -32,7 +32,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               `w-[7vw] rounded-full text-center py-2.5  font-medium transition ${
                 isActive
-                  ? "bg-neutral-300/20 backdrop-blur-[1px] border border-neutral-600/20 text-white"
+                  ? "bg-blue-600/80 backdrop-blur-[1px] border border-neutral-600/20 text-white"
                   : "text-neutral-400 hover:text-white"
               }`
             }
@@ -44,7 +44,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               `w-[7vw] rounded-full text-center py-2.5  font-medium transition ${
                 isActive
-                  ? "bg-neutral-300/20 backdrop-blur-[1px] border border-neutral-600/20 text-white"
+                  ? "bg-blue-600/80 backdrop-blur-[1px] border border-neutral-600/20 text-white"
                   : "text-neutral-400 hover:text-white"
               }`
             }
@@ -56,7 +56,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               `w-[7vw] rounded-full text-center py-2.5  font-medium transition ${
                 isActive
-                  ? "bg-neutral-300/20 backdrop-blur-[1px] border border-neutral-600/20 text-white"
+                  ? "bg-blue-600/80 backdrop-blur-[1px] border border-neutral-600/20 text-white"
                   : "text-neutral-400 hover:text-white"
               }`
             }
@@ -68,7 +68,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               `w-[7vw] rounded-full text-center py-2.5  font-medium transition ${
                 isActive
-                  ? "bg-neutral-300/20 backdrop-blur-[1px] border border-neutral-600/20 text-white"
+                  ? "bg-blue-600/80 backdrop-blur-[1px] border border-neutral-600/20 text-white"
                   : "text-neutral-400 hover:text-white"
               }`
             }
@@ -85,7 +85,7 @@ const Navbar = () => {
             Login
           </NavLink>
           <NavLink
-            className="hidden lg:inline px-4 py-1.5 bg-neutral-400/20 text-neutral-300 hover:bg-neutral-200/30 hover:text-white backdrop-blur-[1px] border rounded-full border-neutral-400/20"
+            className="hidden lg:inline px-4 py-1.5 bg-blue-600/80 text-neutral-300 hover:bg-blue-600 hover:text-white backdrop-blur-[1px] border rounded-full border-neutral-400/20"
             to="/register"
           >
             Get Started
