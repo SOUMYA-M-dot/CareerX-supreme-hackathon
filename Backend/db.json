@@ -1,0 +1,127 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "john@gmail.com",
+      "username": "johnd",
+      "password": "m38rmF$",
+      "name": {
+        "firstname": "john",
+        "lastname": "doe"
+      }
+    }
+  ],
+  "roadmaps": [
+    {"FullStackRoadmap": {
+    "Fundamentals": {
+      "Duration": "Weeks 1-3",
+      "Topics": [
+        "HTML5: Semantic tags, forms, accessibility, SEO basics",
+        "CSS3: Flexbox, Grid, Responsive design, Tailwind CSS",
+        "JavaScript (ES6+): Variables, Functions, Loops, Conditionals, DOM, Events, Promises, Async/Await, Fetch API, Modules, LocalStorage"
+      ],
+      "PracticeIdeas": [
+        "Build Portfolio",
+        "To-Do List",
+        "Weather App using API",
+        "Use platforms like Frontend Mentor, Codewell"
+      ]
+    },
+    "FrontendFramework": {
+      "Duration": "Weeks 4-8",
+      "Framework": "React.js",
+      "Topics": [
+        "Components, Props, State, Events",
+        "Hooks: useState, useEffect, useContext",
+        "Routing: react-router-dom",
+        "API calls with Axios / Fetch",
+        "Component libraries: Shadcn/UI, Chakra UI, Material UI"
+      ],
+      "Bonus": [
+        "Context API or Redux Toolkit",
+        "Vite or Next.js",
+        "Animations with Framer Motion"
+      ],
+      "Projects": [
+        "E-commerce Product Page",
+        "Blog UI",
+        "Dashboard with charts and filters"
+      ]
+    },
+    "VersionControl": {
+      "Duration": "Week 9",
+      "Topics": [
+        "Git: init, add, commit, push, pull, branch, merge",
+        "GitHub: Forks, Pull Requests",
+        "GitHub Pages for hosting"
+      ]
+    },
+    "BackendDevelopment": {
+      "Duration": "Weeks 10-14",
+      "Stack": "Node.js + Express.js",
+      "Topics": [
+        "Node.js basics",
+        "RESTful APIs with Express",
+        "Middleware, Error Handling, Environment Variables",
+        "File Uploads (Multer)",
+        "Authentication (JWT + Cookies), bcrypt"
+      ],
+      "Database": {
+        "MongoDB": ["CRUD operations", "Schema & Models", "Relations (populate)"],
+        "OptionalSQL": "PostgreSQL with Prisma"
+      },
+      "Projects": [
+        "Auth System (Login/Register)",
+        "Blog API",
+        "Task Manager API"
+      ]
+    },
+    "ConnectingFrontendBackend": {
+      "Duration": "Weeks 15-17",
+      "Topics": [
+        "Use backend API from React",
+        "Handle JWT Auth on frontend",
+        "Private routes and dashboards",
+        "Toast notifications"
+      ],
+      "Tools": [
+        "Axios interceptors for tokens",
+        "React Query / TanStack Query"
+      ]
+    },
+    "Deployment": {
+      "Duration": "Weeks 18-19",
+      "Frontend": ["Vercel", "Netlify"],
+      "Backend": ["Render", "Railway", "AWS EC2"],
+      "Database": ["MongoDB Atlas", "Supabase", "Neon.tech"]
+    },
+    "DevOpsTools": {
+      "Topics": [
+        "Docker basics",
+        "CI/CD with GitHub Actions",
+        "Nginx, Reverse Proxy",
+        "PM2 for process management"
+      ]
+    },
+    "AdvancedTopics": {
+      "Topics": [
+        "TypeScript",
+        "Next.js Server Components, SSR/SSG",
+        "WebSockets (Socket.io)",
+        "Redis Caching",
+        "Testing (Jest, Supertest)",
+        "GraphQL (Apollo)",
+        "Cloud (AWS / Firebase)"
+      ]
+    },
+    "ProjectIdeas": [
+      {"Level": "Beginner", "Project": "To-Do App, Weather App", "Stack": "HTML, CSS, JS"},
+      {"Level": "Intermediate", "Project": "Blog / Notes App, Auth System", "Stack": "MERN"},
+      {"Level": "Advanced", "Project": "E-commerce, Chat App, Dashboard", "Stack": "MERN + Socket.io"},
+      {"Level": "Pro", "Project": "AI Resume Analyzer, Interview Tool, Expense Tracker", "Stack": "MERN + AI API"}
+    ]
+      }
+    }
+
+  ]
+}

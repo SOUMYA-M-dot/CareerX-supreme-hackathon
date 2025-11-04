@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: nohemi;
+  src: url(../public/fonts/Nohemi-Font/Nohemi-Light-BF6438cc5899919.ttf);
+}
+
+body{
+  background-color: #1A1A1A;
+  padding-top: 5vw;
+  font-family: Gilroy;
+}
+
+.hero-text{
+  font-family: nohemi;
+}
+
+@media (max-width:600px) {
+  body{
+    padding-top: 15vw;
+  }
+}
