@@ -212,9 +212,12 @@ export default function SignUpForm() {
           {/* Footer Link */}
           <p className="text-center text-gray-400 text-sm pt-4">
             Already have an account?{' '}
-            <span className="text-white hover:underline font-medium cursor-pointer">
+            <Link
+              to="/login"
+              className="text-white hover:underline font-medium cursor-pointer transition-all duration-200"
+            >
               Log in
-            </span>
+            </Link>
           </p>
         </div>
       </div>
