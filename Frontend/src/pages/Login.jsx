@@ -1,4 +1,8 @@
+import { Link } from "react-router-dom";
 import React, { useState } from 'react';
+import { auth } from "../firebase";
+import { signInWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from "firebase/auth";
+
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -15,19 +19,35 @@ export default function LoginPage() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Login submitted:', formData);
-    alert(`Logging in with ${formData.email}`);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    await signInWithEmailAndPassword(auth, formData.email, formData.password);
+    alert("Logged in successfully!");
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
-  const handleGoogleSignIn = () => {
-    alert('Google sign in clicked');
-  };
+const handleGoogleSignIn = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+    alert("Logged in with Google!");
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
-  const handleGithubSignIn = () => {
-    alert('Github sign in clicked');
-  };
+const handleGithubSignIn = async () => {
+  try {
+    const provider = new GithubAuthProvider();
+    await signInWithPopup(auth, provider);
+    alert("Logged in with Github!");
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
   const EyeIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
