@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import { auth, db} from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
+import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+
 
 export default function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -17,19 +22,98 @@ export default function SignUpForm() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert(`Account created for ${formData.email}`);
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleGoogleSignIn = () => {
-    alert('Google sign in clicked');
-  };
+  // basic validation
+  if (!formData.email || !formData.password || !formData.firstName || !formData.lastName) {
+    alert("Please fill all fields.");
+    return;
+  }
 
-  const handleGithubSignIn = () => {
-    alert('Github sign in clicked');
-  };
+  try {
+    // 1) create auth user
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      formData.email,
+      formData.password
+    );
+    const user = userCredential.user; // firebase user object
+
+    // 2) update the Auth profile displayName (optional but useful)
+    await updateProfile(user, {
+      displayName: `${formData.firstName} ${formData.lastName}`
+    });
+
+    // 3) save extra fields to Firestore in a 'users' collection with doc id = uid
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      createdAt: serverTimestamp()
+      // any other fields you want
+    });
+
+    // success
+    alert("Account created successfully!");
+    // optionally redirect or clear form
+  } catch (error) {
+    // show friendly error
+    console.error("Signup error:", error);
+    alert(error.message);
+  }
+};
+
+
+
+
+const handleGoogleSignIn = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      firstName: user.displayName?.split(" ")[0] || "",
+      lastName: user.displayName?.split(" ")[1] || "",
+      email: user.email,
+      createdAt: serverTimestamp()
+    });
+
+    alert("Logged in with Google!");
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+
+
+
+
+const handleGithubSignIn = async () => {
+  try {
+    const provider = new GithubAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      firstName: user.displayName?.split(" ")[0] || "",
+      lastName: user.displayName?.split(" ")[1] || "",
+      email: user.email,
+      createdAt: serverTimestamp()
+    });
+
+    alert("Logged in with Github!");
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+
+
 
   const EyeIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
