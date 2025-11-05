@@ -23,7 +23,7 @@ const WorkHome = ({ data }) => {
       para: "Keep expanding your skills with continuous learning, challenges, and discussions designed to help you stay sharp and confident in your chosen field.",
     },
   ]);
-  const progressLevels = [17, 40, 62, 100];
+  const progressLevels = [17, 40, 62, 85];
 
   return (
     <div className="w-[97%]">

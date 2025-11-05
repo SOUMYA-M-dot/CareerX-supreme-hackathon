@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: nohemi;
-  src: url(../public/fonts/Nohemi-Font/Nohemi-Light-BF6438cc5899919.ttf);
+  src: url(/fonts/Nohemi-Font/Nohemi-Light-BF6438cc5899919.ttf);
 }
 
 body{
