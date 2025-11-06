@@ -481,7 +481,7 @@ const CareerWrapper = () => {
         <CareerNav setSelectedField={setSelectedField} />
       </div>
 
-      <div className="mt-8 lg:mt-4">
+      <div className="mt-8 lg:mt-8">
         <Outlet context={{ roadmaps, selectedField }} />
       </div>
     </div>

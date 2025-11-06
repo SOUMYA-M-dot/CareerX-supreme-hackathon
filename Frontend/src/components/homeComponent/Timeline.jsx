@@ -36,7 +36,7 @@ const Timeline = ({ data }) => {
           const isRight = index % 2 === 0;
           return (
             <div
-              className={`w-[100%] flex justify-between h-[16vw] gap-2.5 ${
+              className={`w-full flex justify-between h-[16vw] gap-2.5 ${
                 isRight ? "" : "lg:flex-row-reverse"
               }`}
             >
@@ -64,8 +64,8 @@ const Timeline = ({ data }) => {
           );
         })}
         <div className="flex justify-center">
-            <i className="ri-arrow-up-line text-[#4379BD] border border-[#4379BD] rounded-full px-2 py-1 w-fit items-center"></i>
-          </div>
+          <i className="ri-arrow-up-line text-[#4379BD] border border-[#4379BD] rounded-full px-2 py-1 w-fit items-center"></i>
+        </div>
       </div>
     </>
   );

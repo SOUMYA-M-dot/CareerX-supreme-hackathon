@@ -7,7 +7,7 @@ const CareerRoadmap = () => {
 
   return (
     <div className="flex flex-col relative w-full lg:mt-[2vw]">
-      <div className="lg:flex justify-between items-baseline-last mt-8 mb-15">
+      <div className="lg:flex justify-between items-baseline-last mt-8 mb-15 p-2 lg:p-0">
         <h3 className="hero-text text-[10vw] capitalize font-bold lg:font-normal lg:text-[4vw] leading-none w-full lg:w-[40%]">
           Your personalised {selectedField} Roadmap
         </h3>
@@ -28,9 +28,9 @@ const CareerRoadmap = () => {
         const isRight = index % 2 === 0;
 
         return (
-          <div 
+          <div
             key={index}
-            className={`w-[100%] flex justify-between min-h-[90vw] lg:min-h-[20vw] gap-2.5 ${
+            className={`w-full flex justify-between min-h-[90vw] lg:min-h-[20vw] gap-2.5 ${
               isRight ? "" : "lg:flex-row-reverse"
             }`}
           >
@@ -47,7 +47,7 @@ const CareerRoadmap = () => {
             </div>
 
             {/* Content card */}
-            <div className="w-[85vw] lg:w-[40vw] min-h-[80vw] lg:min-h-[18vw] p-6 rounded-2xl bg-neutral-800/40 backdrop-blur-md border border-blue-500/20 hover:border-blue-500/50 transition-all duration-300 mt-[5vw]">
+            <div className="w-[85vw] lg:w-[40vw] min-h-[80vw] lg:min-h-[18vw] p-6 rounded-2xl bg-neutral-800/40 backdrop-blur-md border border-blue-500/20 hover:border-blue-500/50 transition-all duration-300 mt-[10vw] lg:mt-[5vw]">
               <h3 className="text-xl font-semibold text-blue-400">
                 {data.time} (Estimated)
               </h3>
@@ -58,7 +58,13 @@ const CareerRoadmap = () => {
 
               <div className=" text-neutral-300 mt-3 font-thin flex flex-col gap-3 lg:gap-1 pl-3 lg:pl-2">
                 {data.steps.map((s, i) => (
-                  <li className="text-[4vw] lg:text-[1.1vw] leading-none" key={i}> {s}</li>
+                  <li
+                    className="text-[3.8vw] lg:text-[1.1vw] leading-none"
+                    key={i}
+                  >
+                    {" "}
+                    {s}
+                  </li>
                 ))}
               </div>
             </div>
