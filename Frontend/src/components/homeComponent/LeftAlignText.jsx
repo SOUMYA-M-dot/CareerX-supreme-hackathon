@@ -9,7 +9,7 @@ const LeftAlignText = ({data}) => {
         </h4>
         <div className="lg:flex justify-between items-baseline-last mt-8 mb-15">
           
-          <h3 className=" text-[3vw] leading-none w-[30%]">{data.title}</h3>
+          <h3 className="text-[3vw] leading-none w-[30%]">{data.title}</h3>
           {data.desc!==""?
           <p className="text-[1.45vw] w-[40%] leading-[2vw] opacity-70">
             {data.desc}

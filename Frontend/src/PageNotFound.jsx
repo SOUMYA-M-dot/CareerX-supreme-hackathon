@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import CustomCursor from "./components/CustomCursor";
+import CustomCursor from "./components/homeComponent/CustomCursor";
 
 const PageNotFound = () => {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const PageNotFound = () => {
           </h4>
           <h4
             onClick={() => {
-              navigate("/about");
+              navigate("/team");
             }}
           >
             About

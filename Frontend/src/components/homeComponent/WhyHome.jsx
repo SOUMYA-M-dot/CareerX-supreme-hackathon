@@ -3,8 +3,7 @@ import WhyHomeCard from "./WhyHomeCard";
 import SuCard from "./SuCard";
 import LeftAlignText from "./LeftAlignText";
 
-const WhyHome = ({data}) => {
-
+const WhyHome = ({ data }) => {
   const [whyCard] = useState([
     {
       logo: "ri-team-line",
@@ -30,29 +29,26 @@ const WhyHome = ({data}) => {
 
   const [suCard] = useState([
     {
-    no: "50k+",
-    text: "Community Members"
-  },
+      no: "50k+",
+      text: "Community Members",
+    },
     {
-    no: "200+",
-    text: "Educational Resources"
-  },
+      no: "200+",
+      text: "Educational Resources",
+    },
     {
-    no: "30+",
-    text: "Global Events"
-  },
+      no: "30+",
+      text: "Global Events",
+    },
     {
-    no: "24/7",
-    text: "Community Support"
-  },
-
-])
-
+      no: "24/7",
+      text: "Community Support",
+    },
+  ]);
 
   return (
     <>
-    
-      <LeftAlignText data={data}/>
+      <LeftAlignText data={data} />
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-[3vw] p-6">
         {whyCard.map((card, index) => (
@@ -65,9 +61,7 @@ const WhyHome = ({data}) => {
         ))}
       </div>
 
-      <div>
-        
-      </div>
+      <div></div>
     </>
   );
 };

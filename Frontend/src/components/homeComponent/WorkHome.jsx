@@ -36,20 +36,31 @@ const WorkHome = ({ data }) => {
               style={{ height: `${process}%` }}
             ></div>
           </div>
-          <div className="flex flex-col gap-3" onMouseLeave={() => {setProcess(0); setHovered(false)}}>
+          <div
+            className="flex flex-col gap-3"
+            onMouseLeave={() => {
+              setProcess(0);
+              setHovered(false);
+            }}
+          >
             {timeline.map((card, index) => (
               <div
                 key={index}
-                onMouseEnter={() => {setProcess(progressLevels[index]); setHovered(true)}}
+                onMouseEnter={() => {
+                  setProcess(progressLevels[index]);
+                  setHovered(true);
+                }}
               >
                 <TimeCard title={card.title} para={card.para} />
               </div>
             ))}
           </div>
         </div>
-        <div className={`h-[25vw] w-[50vw] relative bg-neutral-400/20 text-neutral-300 backdrop-blur-[1px] border rounded-[3.5vw] border-neutral-400/20 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        <div
+          className={`h-[25vw] w-[50vw] relative bg-neutral-400/20 text-neutral-300 backdrop-blur-[1px] border rounded-[3.5vw] border-neutral-400/20 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             hovered ? "scale-y-[1.15]" : "scale-100"
-          }`}>
+          }`}
+        >
           <iframe
             src="https://my.spline.design/genkubgreetingrobot-17fQzDlN8o1QAKyarawOYkxX/"
             frameborder="0"

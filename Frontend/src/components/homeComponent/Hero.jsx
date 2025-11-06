@@ -5,7 +5,7 @@ import Update from "./Update";
 import WhyHome from "./WhyHome";
 import WorkHome from "./WorkHome";
 import Testimonial from "./Testimonial";
-import Footer from "./Footer";
+import Footer from "../Footer";
 
 const Hero = () => {
   return (
