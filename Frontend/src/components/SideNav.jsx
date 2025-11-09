@@ -13,7 +13,7 @@ const SideNav = ({ openMenu, setOpenMenu }) => {
           ${openMenu ? "translate-x-0 opacity-100" : "-translate-x-5 opacity-0 pointer-events-none"}
         `}
       >
-        {["/", "/career", "/dashboard", "/team", "/community"].map((path) => (
+        {["/", "/career", "/dashboard", "/team"].map((path) => (
           <NavLink
             key={path}
             to={path}

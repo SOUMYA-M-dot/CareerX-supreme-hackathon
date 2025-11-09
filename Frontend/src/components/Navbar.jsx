@@ -63,10 +63,10 @@ const Navbar = () => {
         </h3>
 
         {/* 🧭 Navigation Links */}
-        <div className="hidden lg:flex bg-neutral-400/20 text-neutral-300 backdrop-blur-[1px] border rounded-full border-neutral-400/20 w-[40%] align-center justify-between ml-[10vw]">
-          {["/", "/career", "/dashboard", "/team", "/community"].map(
+        <div className="hidden lg:flex bg-neutral-400/20 text-neutral-300 backdrop-blur-[1px] border rounded-full border-neutral-400/20 w-[33%] align-center justify-between ml-[10vw]">
+          {["/", "/career", "/dashboard", "/team"].map(
             (path, i) => {
-              const names = ["Home", "Career", "Dashboard", "Team", "Community"];
+              const names = ["Home", "Career", "Dashboard", "Team"];
               return (
                 <NavLink
                   key={i}
