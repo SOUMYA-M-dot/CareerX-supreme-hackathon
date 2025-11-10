@@ -33,7 +33,7 @@ const Testimonial = ({ data }) => {
     <>
       <LeftAlignText data={data} />
       <div className="relative w-full overflow-hidden">
-        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide p-4">
+        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide p-1 lg:p-4">
           {testi.map((card, index) => (
             <div key={index} className="snap-center shrink-0">
               <TestiCard {...card} />
