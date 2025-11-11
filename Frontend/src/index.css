@@ -5,10 +5,15 @@
   src: url(./assets/fonts/Nohemi-Font/Nohemi-Light-BF6438cc5899919.ttf);
 }
 
+@font-face {
+  font-family: Gilroy;
+  src: url(./assets/fonts/Gilroy-Medium_eHDK2RllDd.ttf);
+}
+
 body{
   background-color: #1A1A1A;
   padding-top: 5vw;
-  font-family: Roboto;
+  font-family: Gilroy;
 }
 
 .hero-text{

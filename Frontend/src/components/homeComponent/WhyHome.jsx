@@ -55,7 +55,7 @@ const WhyHome = ({ data }) => {
           <WhyHomeCard key={index} {...card} />
         ))}
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-[3vw] lg:gap-[3vw] p-4 lg:p-6 py-8 lg:py-6 lg:px-10 bg-[#1761D6]/90 w-[97%] rounded-2xl border border-[#003694] mt-[5vw]">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-[3vw] lg:gap-[3vw] p-4 lg:p-6 py-8 lg:py-6 lg:px-10 bg-[#1761D6]/90 text-white w-[97%] rounded-2xl border border-[#003694] mt-[5vw]">
         {suCard.map((card, index) => (
           <SuCard key={index} {...card} />
         ))}
