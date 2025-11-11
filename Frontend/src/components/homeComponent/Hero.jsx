@@ -5,6 +5,7 @@ import Update from "./Update";
 import WhyHome from "./WhyHome";
 import WorkHome from "./WorkHome";
 import Testimonial from "./Testimonial";
+import FloatingChatbox from "../FloatingChatbox";
 import Footer from "../Footer";
 
 const Hero = () => {
@@ -47,6 +48,10 @@ const Hero = () => {
           desc: "Hear from tech enthusiasts who love careerX",
         }}
       />
+      <Footer />
+
+
+      <FloatingChatbox />
     </div>
   );
 };
