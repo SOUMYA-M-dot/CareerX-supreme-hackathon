@@ -1,3 +1,75 @@
+// import React from "react";
+
+// export default function Testimonials() {
+//   const data = [
+//     {
+//       stat: "81% say their teamwork is more efficient",
+//       quote: "We manage too many people to constantly be searching for stuff",
+//       desc: "In Twist, we waste less time and lose fewer conversations. Everyone loves that our team communication is finally organized and in one place.",
+//       author: "Chelle — CEO at Clarity Web Consulting",
+//       img: "https://via.placeholder.com/180",
+//       link: "#",
+//     },
+//     {
+//       stat: "78% say team communication is calmer",
+//       quote: "Twist shows more respect for my team’s time and attention",
+//       desc: "Switching from Slack was surprisingly easy. Collaborating in Twist is a lot less stressful because it’s designed to help people do deep, focused work.",
+//       author: "Richard — Designer at Balance",
+//       img: "https://via.placeholder.com/180",
+//       link: "#",
+//     },
+//     {
+//       stat: "76% say they're more in sync",
+//       quote: "Now that we’re using Twist, we’re much more connected",
+//       desc: "As a remote team, we’re still tightly connected. Twist’s focus on mindful team communication allows us to collaborate delightfully with ease and clarity.",
+//       author: "Daniel — President at KDM Theatrical",
+//       img: "https://via.placeholder.com/180",
+//       link: "#",
+//     }
+//   ];
+
+//   return (
+//     <section className="max-w-4xl mx-auto my-16 px-6">
+//       {data.map((item, index) => (
+//         <div
+//           key={index}
+//           className={`flex items-center gap-10 mb-20 flex-wrap ${
+//             index % 2 === 1 ? "flex-row-reverse" : ""
+//           }`}
+//         >
+//           <img
+//             src={item.img}
+//             alt={item.author}
+//             className="w-44 h-44 rounded-full object-cover shadow-xl"
+//           />
+
+//           <div className="flex-1 min-w-[250px]">
+//             <p className="text-sm text-gray-500 uppercase font-semibold">{item.stat}</p>
+
+//             <blockquote className="text-xl font-semibold text-gray-900 my-3">
+//               “{item.quote}”
+//             </blockquote>
+
+//             <p className="text-gray-600 text-[0.95rem]">{item.desc}</p>
+
+//             <p className="font-bold text-gray-800 mt-3">{item.author}</p>
+
+//             <a
+//               href={item.link}
+//               className="text-blue-600 text-sm mt-2 inline-block hover:underline"
+//             >
+//               Why they switched →
+//             </a>
+//           </div>
+//         </div>
+//       ))}
+//     </section>
+//   );
+// }
+
+
+
+
 import React, { useState, useEffect } from 'react';
 
 export default function TestimonialsSection() {
@@ -9,10 +81,10 @@ export default function TestimonialsSection() {
       stat: "81% SAY THEIR TEAMWORK IS MORE EFFICIENT",
       quote: "We manage too many people to constantly be searching for stuff",
       description: "In CareerX, we waste less time and lose fewer conversations. Everyone loves that our team communication is finally organized and in one place.",
-      name: "Chelle",
-      title: "CEO of Chelle Weech Consulting",
-      link: "Why Chelle Switched",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+      name: "parnavo",
+      title: "backend developer",
+      link: "Why parnavo Switched",
+      image: "src/assets/images/pg.jpg",
       decorations: ['circle', 'line', 'dot']
     },
     {
@@ -20,10 +92,10 @@ export default function TestimonialsSection() {
       stat: "78% SAY TEAM COMMUNICATION IS CALMER",
       quote: "CareerX shows more respect for my team's time and attention",
       description: "Switching from Slack was surprisingly easy. Collaborating in CareerX is a lot less stressful because it's designed to help people do deep, focused work.",
-      name: "Richard",
-      title: "Designer at Balance",
-      link: "Why Richard Switched",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+      name: "Hritam",
+      title: "Designer + fnontend developer",
+      link: "Why Hritam Switched",
+      image: "src/assets/images/dada.png",
       decorations: ['square', 'circle', 'arc']
     },
     {
@@ -31,10 +103,10 @@ export default function TestimonialsSection() {
       stat: "76% SAY THEY'RE MORE IN SYNC",
       quote: "Now that we're using CareerX, we're much more connected",
       description: "As a remote team, we're still tightly connected. CareerX's focus on mindful team communication allows us to collaborate delightfully with ease and clarity.",
-      name: "Daniel",
-      title: "President of KGM Theatrical",
-      link: "Why Daniel Switched",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+      name: "Soumya",
+      title: "project manger manage everything ",
+      link: "Why soumya Switched",
+      image: "src/assets/images/didi.jpg",
       decorations: ['dots', 'line', 'circle']
     },
     {
@@ -42,10 +114,10 @@ export default function TestimonialsSection() {
       stat: "85% SAY COLLABORATION IS SEAMLESS",
       quote: "CareerX transformed how our team works together",
       description: "The intuitive interface and powerful features make project management effortless. Our productivity has skyrocketed since making the switch.",
-      name: "Sarah",
-      title: "Project Manager at TechFlow",
-      link: "Why Sarah Switched",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+      name: "Ramkrishna",
+      title: "AI specialist",
+      link: "Why ramkrishna Switched",
+      image: "src/assets/images/ram.jpg",
       decorations: ['circle', 'dots', 'arc']
     }
   ];
