@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
-import { auth, db} from "../firebase";
-import { createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, db } from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-
 
 export default function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -14,6 +13,7 @@ export default function SignUpForm() {
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -22,109 +22,98 @@ export default function SignUpForm() {
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  // basic validation
-  if (!formData.email || !formData.password || !formData.firstName || !formData.lastName) {
-    alert("Please fill all fields.");
-    return;
-  }
+    if (!formData.email || !formData.password || !formData.firstName || !formData.lastName) {
+      alert("Please fill all fields.");
+      return;
+    }
 
-  try {
-    // 1) create auth user
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      formData.email,
-      formData.password
-    );
-    const user = userCredential.user; // firebase user object
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const user = userCredential.user;
 
-    // 2) update the Auth profile displayName (optional but useful)
-    await updateProfile(user, {
-      displayName: `${formData.firstName} ${formData.lastName}`
-    });
+      await updateProfile(user, {
+        displayName: `${formData.firstName} ${formData.lastName}`
+      });
 
-    // 3) save extra fields to Firestore in a 'users' collection with doc id = uid
-    await setDoc(doc(db, "users", user.uid), {
-      uid: user.uid,
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      createdAt: serverTimestamp()
-      // any other fields you want
-    });
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        createdAt: serverTimestamp()
+      });
 
-    // success
-    alert("Account created successfully!");
-    // optionally redirect or clear form
-  } catch (error) {
-    // show friendly error
-    console.error("Signup error:", error);
-    alert(error.message);
-  }
-};
+      alert("Account created successfully!");
+      navigate("/");
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert(error.message);
+    }
+  };
 
+  const handleGoogleSignIn = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
 
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        firstName: user.displayName?.split(" ")[0] || "",
+        lastName: user.displayName?.split(" ")[1] || "",
+        email: user.email,
+        createdAt: serverTimestamp()
+      });
 
+      alert("Logged in with Google!");
+      navigate("/");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
-const handleGoogleSignIn = async () => {
-  try {
-    const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
+  const handleGithubSignIn = async () => {
+    try {
+      const provider = new GithubAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
 
-    await setDoc(doc(db, "users", user.uid), {
-      uid: user.uid,
-      firstName: user.displayName?.split(" ")[0] || "",
-      lastName: user.displayName?.split(" ")[1] || "",
-      email: user.email,
-      createdAt: serverTimestamp()
-    });
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        firstName: user.displayName?.split(" ")[0] || "",
+        lastName: user.displayName?.split(" ")[1] || "",
+        email: user.email,
+        createdAt: serverTimestamp()
+      });
 
-    alert("Logged in with Google!");
-  } catch (error) {
-    alert(error.message);
-  }
-};
-
-
-
-
-
-const handleGithubSignIn = async () => {
-  try {
-    const provider = new GithubAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-
-    await setDoc(doc(db, "users", user.uid), {
-      uid: user.uid,
-      firstName: user.displayName?.split(" ")[0] || "",
-      lastName: user.displayName?.split(" ")[1] || "",
-      email: user.email,
-      createdAt: serverTimestamp()
-    });
-
-    alert("Logged in with Github!");
-  } catch (error) {
-    alert(error.message);
-  }
-};
-
-
-
+      alert("Logged in with Github!");
+      navigate("/");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const EyeIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
       <circle cx="12" cy="12" r="3"></circle>
     </svg>
   );
 
   const EyeOffIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1
+      5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5
+      18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
       <line x1="1" y1="1" x2="23" y2="23"></line>
     </svg>
   );
@@ -138,36 +127,47 @@ const handleGithubSignIn = async () => {
           66% { transform: translate(-20px, 20px) scale(0.9); }
           100% { transform: translate(0px, 0px) scale(1); }
         }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
       `}</style>
 
-      <div className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-300 via-purple-600 to-black"></div>
+      {/* Background */}
+      <div
+        className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden"
+        style={{
+          background: `
+            linear-gradient(
+              145deg,
+              rgba(26, 26, 26, 1) 70%,
+              color-mix(in oklch, oklch(54.6% 0.245 262.881), transparent 80%)
+            )
+          `,
+        }}
+      >
+        {/* Soft blobs */}
+        <div className="absolute top-0 left-0 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 bg-[oklch(54.6%_0.245_262.881)] animate-blob"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 bg-[oklch(54.6%_0.245_262.881)] animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-0 left-1/2 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 bg-[oklch(54.6%_0.245_262.881)] animate-blob animation-delay-4000"></div>
 
-        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-violet-400 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-fuchsia-400 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
-
-        <div className="w-full max-w-md relative z-10">
-          <div className="backdrop-blur-2xl bg-white/10 rounded-3xl p-8 shadow-2xl border border-white/20">
+        {/* Main Card */}
+        <div className="w-full max-w-md relative z-10 translate-x-13 -translate-y-8">
+          <div className="backdrop-blur-2xl bg-white/10 rounded-3xl p-8 shadow-2xl border border-white/10">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">Sign Up Account</h1>
-              <p className="text-white/80 text-sm">Enter your personal data to create your account.</p>
+              <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
+                Create Your Account
+              </h1>
+              <p className="text-white/70 text-sm">
+                Join our community and start your journey today.
+              </p>
             </div>
 
             <div className="space-y-4">
+              {/* Google / Github */}
               <div className="grid grid-cols-2 gap-3 mb-6">
                 <button
                   onClick={handleGoogleSignIn}
-                  className="flex items-center justify-center gap-2 bg-white/20 backdrop-blur-lg hover:bg-white/30 text-white py-3 px-4 rounded-xl transition-all border border-white/30 shadow-lg"
+                  className="flex items-center justify-center gap-2 bg-white/15 backdrop-blur-lg hover:bg-white/25 text-white py-3 px-4 rounded-xl transition-all border border-white/20 shadow-md"
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -180,50 +180,70 @@ const handleGithubSignIn = async () => {
 
                 <button
                   onClick={handleGithubSignIn}
-                  className="flex items-center justify-center gap-2 bg-white/20 backdrop-blur-lg hover:bg-white/30 text-white py-3 px-4 rounded-xl transition-all border border-white/30 shadow-lg"
+                  className="flex items-center justify-center gap-2 bg-white/15 backdrop-blur-lg hover:bg-white/25 text-white py-3 px-4 rounded-xl transition-all border border-white/20 shadow-md"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    <path d="M12 0c-6.626 0-12 5.373-12
+                    12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084
+                    1.839 1.237 1.839 1.237 1.07 1.834
+                    2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931
+                    0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176
+                    0 0 1.008-.322 3.301 1.23.957-.266
+                    1.983-.399 3.003-.404 1.02.005
+                    2.047.138 3.006.404 2.291-1.552
+                    3.297-1.23 3.297-1.23.653 1.653.242
+                    2.874.118 3.176.77.84 1.235 1.911
+                    1.235 3.221 0 4.609-2.807
+                    5.624-5.479 5.921.43.372.823
+                    1.102.823 2.222v3.293c0 .319.192.694.801.576
+                    4.765-1.589 8.199-6.086 8.199-11.386
+                    0-6.627-5.373-12-12-12z" />
                   </svg>
                   Github
                 </button>
               </div>
 
+              {/* Divider */}
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-white/30"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-transparent text-white/70">Or</span>
+                  <span className="px-2 bg-transparent text-white/60">Or</span>
                 </div>
               </div>
 
+              {/* Name Inputs */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-white text-sm font-medium mb-2">First Name</label>
+                  <label className="block text-white text-sm font-medium mb-2">
+                    First Name
+                  </label>
                   <input
                     type="text"
                     name="firstName"
-                    placeholder="eg. John"
+                    placeholder="John"
                     value={formData.firstName}
                     onChange={handleChange}
-                    className="w-full bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60 shadow-lg"
+                    className="w-full bg-white/10 text-white border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/40 placeholder-white/60 shadow-lg"
                   />
                 </div>
-
                 <div>
-                  <label className="block text-white text-sm font-medium mb-2">Last Name</label>
+                  <label className="block text-white text-sm font-medium mb-2">
+                    Last Name
+                  </label>
                   <input
                     type="text"
                     name="lastName"
-                    placeholder="eg. Francisco"
+                    placeholder="Doe"
                     value={formData.lastName}
                     onChange={handleChange}
-                    className="w-full bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60 shadow-lg"
+                    className="w-full bg-white/10 text-white border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/40 placeholder-white/60 shadow-lg"
                   />
                 </div>
               </div>
 
+              {/* Email */}
               <div>
                 <label className="block text-white text-sm font-medium mb-2">Email</label>
                 <input
@@ -232,10 +252,11 @@ const handleGithubSignIn = async () => {
                   placeholder="eg. johnfrancisco@gmail.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60 shadow-lg"
+                  className="w-full bg-white/10 text-white border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/40 placeholder-white/60 shadow-lg"
                 />
               </div>
 
+              {/* Password */}
               <div>
                 <label className="block text-white text-sm font-medium mb-2">Password</label>
                 <div className="relative">
@@ -245,7 +266,7 @@ const handleGithubSignIn = async () => {
                     placeholder="Enter your password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60 shadow-lg"
+                    className="w-full bg-white/10 text-white border border-white/20 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-white/40 placeholder-white/60 shadow-lg"
                   />
                   <button
                     onClick={() => setShowPassword(!showPassword)}
@@ -257,9 +278,10 @@ const handleGithubSignIn = async () => {
                 <p className="text-white/70 text-xs mt-2">Must be at least 8 characters.</p>
               </div>
 
+              {/* Submit */}
               <button
                 onClick={handleSubmit}
-                className="w-full bg-white hover:bg-white/90 text-purple-900 font-semibold py-3 px-4 rounded-xl transition-all mt-6 shadow-xl hover:shadow-2xl hover:scale-105 transform"
+                className="w-full bg-[oklch(54.6%_0.245_262.881)] hover:bg-[oklch(54.6%_0.245_262.881_/_0.8)] text-white font-semibold py-3 px-4 rounded-xl transition-all mt-6 shadow-xl hover:scale-105 transform"
               >
                 Sign Up
               </button>
@@ -268,7 +290,7 @@ const handleGithubSignIn = async () => {
                 Already have an account?{' '}
                 <Link
                   to="/login"
-                  className="text-white hover:underline font-medium cursor-pointer transition-all duration-200"
+                  className="text-[oklch(54.6%_0.245_262.881)] hover:underline font-medium cursor-pointer transition-all duration-200"
                 >
                   Log in
                 </Link>
