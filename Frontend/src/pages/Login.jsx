@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from "firebase/auth";
-
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -11,6 +10,7 @@ export default function LoginPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -20,34 +20,37 @@ export default function LoginPage() {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    await signInWithEmailAndPassword(auth, formData.email, formData.password);
-    alert("Logged in successfully!");
-  } catch (error) {
-    alert(error.message);
-  }
-};
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      alert("Logged in successfully!");
+      navigate("/"); // ✅ redirect to Home.jsx
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
-const handleGoogleSignIn = async () => {
-  try {
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-    alert("Logged in with Google!");
-  } catch (error) {
-    alert(error.message);
-  }
-};
+  const handleGoogleSignIn = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      alert("Logged in with Google!");
+      navigate("/"); // ✅ redirect to Home.jsx
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
-const handleGithubSignIn = async () => {
-  try {
-    const provider = new GithubAuthProvider();
-    await signInWithPopup(auth, provider);
-    alert("Logged in with Github!");
-  } catch (error) {
-    alert(error.message);
-  }
-};
+  const handleGithubSignIn = async () => {
+    try {
+      const provider = new GithubAuthProvider();
+      await signInWithPopup(auth, provider);
+      alert("Logged in with Github!");
+      navigate("/"); // ✅ redirect to Home.jsx
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const EyeIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -83,25 +86,37 @@ const handleGithubSignIn = async () => {
         }
       `}</style>
 
-      <div className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-300 via-purple-600 to-black"></div>
+      {/* 🖤 Background: Dark theme with soft purple glow */}
+      <div className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden"
+           style={{
+             background: `
+               linear-gradient(
+                 145deg,
+                 rgba(26, 26, 26, 1) 70%,
+                 color-mix(in oklch, oklch(54.6% 0.245 262.881), transparent 80%)
+               )
+             `,
+           }}>
+        
+        {/* Floating soft blur elements */}
+        <div className="absolute top-0 left-0 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 bg-[oklch(54.6%_0.245_262.881)] animate-blob"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 bg-[oklch(54.6%_0.245_262.881)] animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-0 left-1/2 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 bg-[oklch(54.6%_0.245_262.881)] animate-blob animation-delay-4000"></div>
 
-        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-violet-400 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-fuchsia-400 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
-
-        <div className="w-full max-w-md relative z-10">
-          <div className="backdrop-blur-2xl bg-white/10 rounded-3xl p-8 shadow-2xl border border-white/20">
+        {/* Main Card */}
+        <div className="w-full max-w-md relative z-10 translate-x-13 -translate-y-10">
+          <div className="backdrop-blur-2xl bg-white/10 rounded-3xl p-8 shadow-2xl border border-white/10">
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">Welcome Back</h1>
-              <p className="text-white/80 text-sm">Enter your credentials to access your account.</p>
+              <p className="text-white/70 text-sm">Enter your credentials to access your account.</p>
             </div>
 
             <div className="space-y-4">
+              {/* Google + Github Buttons */}
               <div className="grid grid-cols-2 gap-3 mb-6">
                 <button
                   onClick={handleGoogleSignIn}
-                  className="flex items-center justify-center gap-2 bg-white/20 backdrop-blur-lg hover:bg-white/30 text-white py-3 px-4 rounded-xl transition-all border border-white/30 shadow-lg"
+                  className="flex items-center justify-center gap-2 bg-white/15 backdrop-blur-lg hover:bg-white/25 text-white py-3 px-4 rounded-xl transition-all border border-white/20 shadow-md"
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -114,7 +129,7 @@ const handleGithubSignIn = async () => {
 
                 <button
                   onClick={handleGithubSignIn}
-                  className="flex items-center justify-center gap-2 bg-white/20 backdrop-blur-lg hover:bg-white/30 text-white py-3 px-4 rounded-xl transition-all border border-white/30 shadow-lg"
+                  className="flex items-center justify-center gap-2 bg-white/15 backdrop-blur-lg hover:bg-white/25 text-white py-3 px-4 rounded-xl transition-all border border-white/20 shadow-md"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
@@ -123,15 +138,17 @@ const handleGithubSignIn = async () => {
                 </button>
               </div>
 
+              {/* Divider */}
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-white/30"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-transparent text-white/70">Or</span>
+                  <span className="px-2 bg-transparent text-white/60">Or</span>
                 </div>
               </div>
 
+              {/* Email */}
               <div>
                 <label className="block text-white text-sm font-medium mb-2">Email</label>
                 <input
@@ -140,10 +157,11 @@ const handleGithubSignIn = async () => {
                   placeholder="eg. johnfrancisco@gmail.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60 shadow-lg"
+                  className="w-full bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/40 placeholder-white/60 shadow-lg"
                 />
               </div>
 
+              {/* Password */}
               <div>
                 <label className="block text-white text-sm font-medium mb-2">Password</label>
                 <div className="relative">
@@ -153,7 +171,7 @@ const handleGithubSignIn = async () => {
                     placeholder="Enter your password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60 shadow-lg"
+                    className="w-full bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-white/40 placeholder-white/60 shadow-lg"
                   />
                   <button
                     onClick={() => setShowPassword(!showPassword)}
@@ -164,13 +182,14 @@ const handleGithubSignIn = async () => {
                 </div>
               </div>
 
+              {/* Remember Me */}
               <div className="flex items-center justify-between">
                 <label className="flex items-center cursor-pointer">
                   <input
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 rounded focus:ring-2 focus:ring-white/50 cursor-pointer accent-purple-500"
+                    className="w-4 h-4 rounded focus:ring-2 focus:ring-white/40 cursor-pointer accent-purple-500"
                   />
                   <span className="ml-2 text-sm text-white/80">Remember me</span>
                 </label>
@@ -179,18 +198,20 @@ const handleGithubSignIn = async () => {
                 </span>
               </div>
 
+              {/* Submit */}
               <button
                 onClick={handleSubmit}
-                className="w-full bg-white hover:bg-white/90 text-purple-900 font-semibold py-3 px-4 rounded-xl transition-all mt-6 shadow-xl hover:shadow-2xl hover:scale-105 transform"
+                className="w-full bg-[oklch(54.6%_0.245_262.881)] hover:bg-[oklch(54.6%_0.245_262.881_/_0.8)] text-white font-semibold py-3 px-4 rounded-xl transition-all mt-6 shadow-xl hover:scale-105 transform"
               >
                 Log In
               </button>
 
+              {/* Sign Up Link */}
               <p className="text-center text-gray-400 text-sm mt-6">
                 Don't have an account?{' '}
                 <Link
                   to="/Register"
-                  className="text-white hover:underline font-medium cursor-pointer transition-all duration-200"
+                  className="text-[oklch(54.6%_0.245_262.881)] hover:underline font-medium cursor-pointer transition-all duration-200"
                 >
                   Sign up
                 </Link>
