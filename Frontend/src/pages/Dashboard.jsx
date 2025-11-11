@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import FloatingChatbox from "../components/FloatingChatbox";
 
 export default function LearningDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -215,6 +216,7 @@ export default function LearningDashboard() {
             </div>
           </div>
         </div>
+        <FloatingChatbox />
       </div>
     </>
   );
