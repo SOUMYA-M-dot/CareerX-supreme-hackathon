@@ -48,7 +48,7 @@ const Hero = () => {
           desc: "Hear from tech enthusiasts who love careerX",
         }}
       />
-      <Footer />
+
 
 
       <FloatingChatbox />
