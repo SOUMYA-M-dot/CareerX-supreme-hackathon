@@ -10,18 +10,41 @@
   src: url(./assets/fonts/Gilroy-Medium_eHDK2RllDd.ttf);
 }
 
-body{
+body {
   background-color: #1A1A1A;
   padding-top: 5vw;
   font-family: Gilroy;
 }
 
-.hero-text{
+.hero-text {
   font-family: nohemi;
 }
 
 @media (max-width:600px) {
-  body{
+  body {
     padding-top: 15vw;
   }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
