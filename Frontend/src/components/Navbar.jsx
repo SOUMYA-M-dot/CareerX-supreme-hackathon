@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import profileImg from "../assets/images/profile.png";
 import { useState, useEffect } from "react";
 import SideNav from "./SideNav";
 import { auth, db } from "../firebase";
@@ -13,12 +14,15 @@ const Navbar = () => {
   // 🟣 Detect user login state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log("Navbar: Auth state changed", user);
       if (user) {
         try {
           const userDoc = await getDoc(doc(db, "users", user.uid));
           if (userDoc.exists()) {
+            console.log("Navbar: User doc found", userDoc.data());
             setUserData(userDoc.data());
           } else {
+            console.warn("Navbar: User doc not found in Firestore, using auth profile");
             // fallback if no Firestore entry
             setUserData({
               firstName: user.displayName?.split(" ")[0] || "User",
@@ -26,8 +30,13 @@ const Navbar = () => {
           }
         } catch (error) {
           console.error("Error fetching user:", error);
+          // Fallback on error too
+          setUserData({
+            firstName: user.displayName?.split(" ")[0] || "User",
+          });
         }
       } else {
+        console.log("Navbar: No user logged in");
         setUserData(null);
       }
     });
@@ -71,10 +80,9 @@ const Navbar = () => {
                 <NavLink
                   key={i}
                   className={({ isActive }) =>
-                    `w-[7vw] rounded-full text-center py-2.5 font-medium transition ${
-                      isActive
-                        ? "bg-blue-600/80 backdrop-blur-[1px] border border-neutral-600/20 text-white"
-                        : "text-neutral-400 hover:text-white"
+                    `w-[7vw] rounded-full text-center py-2.5 font-medium transition ${isActive
+                      ? "bg-blue-600/80 backdrop-blur-[1px] border border-neutral-600/20 text-white"
+                      : "text-neutral-400 hover:text-white"
                     }`
                   }
                   to={path}
@@ -96,8 +104,12 @@ const Navbar = () => {
               <img
                 src={
                   auth.currentUser?.photoURL ||
-                  "src/assets/images/profile.png"
+                  profileImg
                 }
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = profileImg;
+                }}
                 alt="profile"
                 onClick={handleLogout}
                 title="Logout"
